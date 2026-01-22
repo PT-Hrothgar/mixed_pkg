@@ -1,4 +1,4 @@
-__version__ = 0.9
+__version__ = "0.11"
 
 from mixed_pkg.c_helpers import get_factors
 
