@@ -2,13 +2,11 @@
 
 typedef struct node
 {
-    long num;
+    long long num;
     struct node *next;
 }
 node;
 
-node *factor(long num);
+node *factor(long long num);
 void freelist(node *list, bool print_contents, const char *sep);
-long get_one_factor(long num);
-long gcf(long x, long y);
-long sigma(long x);
+long long get_one_factor(long long num);

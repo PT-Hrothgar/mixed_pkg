@@ -4,11 +4,11 @@
 #include <stdlib.h>
 #include "factors.h"
 
-node *factor(long num)
+node *factor(long long num)
 {
     node *result = NULL;
     node *thisnode, *lastnode;
-    long factor;
+    long long factor;
 
     while (true)
     {
@@ -64,7 +64,7 @@ void freelist(node *list, bool print_contents, const char *sep)
 
         if (print_contents)
         {
-            printf("%li", list->num);
+            printf("%lli", list->num);
         }
         next = list->next;
         free(list);
@@ -72,11 +72,11 @@ void freelist(node *list, bool print_contents, const char *sep)
     }
 }
 
-long get_one_factor(long num)
+long long get_one_factor(long long num)
 {
     long double max = sqrt(num);
 
-    for (long y = 2; y <= (long) max; y ++)
+    for (long long y = 2; y <= (long long) max; y ++)
     {
         if (!(num % y))
         {
@@ -86,60 +86,3 @@ long get_one_factor(long num)
     return num;
 }
 
-long gcf(long x, long y)
-{
-    long q, r;
-
-    while (true)
-    {
-        q = x / y;
-        r = x - y * q;
-
-        if (r == 0)
-        {
-            return y;
-        }
-        x = y;
-        y = r;
-    }
-}
-
-long sigma(long x)
-{
-    if (x == 0 || x == 1)
-    {
-        return x;
-    }
-
-    long
-        result = 0,
-        prev_result = 0,
-        i = 1,
-        sqrt_floor = (long) floor(sqrt(x));
-    long j;
-    double q;
-
-    while (1)
-    {
-        q = x / (double) i;
-        j = (long) q;
-
-        if (q == j)
-        {
-            result += i + (i == j ? 0 : j);
-
-            if (result < prev_result)
-            {
-                return -1;
-            }
-
-            prev_result = result;
-        }
-
-        if (i >= sqrt_floor)
-        {
-            return result;
-        }
-        i++;
-    }
-}

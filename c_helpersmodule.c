@@ -4,9 +4,9 @@
 
 static PyObject *get_factors(PyObject *self, PyObject *args)
 {
-    long num;
+    long long num;
 
-    if (!PyArg_ParseTuple(args, "l", &num))
+    if (!PyArg_ParseTuple(args, "L", &num))
     {
         return NULL;
     }
@@ -36,7 +36,7 @@ static PyObject *get_factors(PyObject *self, PyObject *args)
     while (factors != NULL)
     {
         // Create a Python tuple containing the factor
-        append_args = Py_BuildValue("(l)", factors->num);
+        append_args = Py_BuildValue("(L)", factors->num);
         // NULL == no keyword arguments
         PyObject_Call(append, append_args, NULL);
         Py_DECREF(append_args);
