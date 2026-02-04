@@ -26,26 +26,32 @@ static PyObject *get_factors(PyObject *self, PyObject *args)
 
     // Create an empty Python list
     PyObject *result = PyList_New(0);
-    // Get the list's `append` method
-    PyObject *append = PyObject_GetAttrString(result, "append");
-    // Arguments to pass to `append`
-    PyObject *append_args;
-    // Next node in `factors`
-    node *next;
-
-    while (factors != NULL)
+    if (result == NULL)
     {
-        // Create a Python tuple containing the factor
-        append_args = Py_BuildValue("(L)", factors->num);
-        // NULL == no keyword arguments
-        PyObject_Call(append, append_args, NULL);
-        Py_DECREF(append_args);
-
-        next = factors->next;
-        free(factors);
-        factors = next;
+        freelist(factors, false, "");
+        return NULL;
     }
-    Py_DECREF(append);
+    node *this_node = factors;
+    PyObject *this_factor;
+
+    while (this_node != NULL)
+    {
+        if ((this_factor = PyLong_FromLong(this_node->num)) == NULL)
+        {
+            freelist(factors, false, "");
+            Py_DECREF(result);
+            return NULL;
+        }
+        if (PyList_Append(result, this_factor) == -1)
+        {
+            freelist(factors, false, "");
+            Py_DECREF(result);
+            return NULL;
+        }
+        this_node = this_node->next;
+    }
+
+    freelist(factors, false, "");
     return result;
 }
 
