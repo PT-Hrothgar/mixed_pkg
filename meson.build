@@ -1,4 +1,4 @@
-project('mixed_pkg', 'c', license: 'MIT', license_files: 'LICENSE', version: '0.11')
+project('mixed_pkg', 'c', license: 'MIT', license_files: 'LICENSE', version: '0.12')
 
 py = import('python').find_installation(pure: false)
 
